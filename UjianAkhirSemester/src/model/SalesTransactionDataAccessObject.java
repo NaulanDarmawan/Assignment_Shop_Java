@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class SalesTransactionDataAccessObject {
     Connection connection;
     //---Konstanta untuk perintah SQL -----
-    final String insert   = "insert into sales_transactions set SalesNumber=?, SaleDate=?, ShippedDate=?, Status=?, Comments=?, CustomerId=?, FirstName=?, Lastname=?, Product_Code=?, Product_Name=?, Quantity=?, PriceEach=?, TotalPrice=?;";
+    final String insert   = "insert into sales_transactions set SalesNumber=?, SaleDate=?, ShippedDate=?, Status=?, Comments=?, CustomerId=?, FirstName=?, Lastname=?, ProductCode=?, ProductName=?, Quantity=?, PriceEach=?, TotalPrice=?;";
     final String update   = "update sales_transactions set Comments=?, Quantity=?, PriceEach=?, TotalPrice=? where SalesNumber=?;";
     final String delete   = "delete from sales_transactions where SalesNumber=?;";
     final String alldata  = "select * from sales_transactions order by SalesNumber asc;";
@@ -42,7 +42,7 @@ public class SalesTransactionDataAccessObject {
             statement.setString(10, modelSalesTransactions.getProductName());
             statement.setString(11, modelSalesTransactions.getQuantity());
             statement.setString(12, modelSalesTransactions.getPriceEach());
-            statement.setString(12, modelSalesTransactions.getTotalPrice());
+            statement.setString(13, modelSalesTransactions.getTotalPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Tambah data Sales gagal " + e.getMessage());

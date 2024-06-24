@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class SalesTransactionTable   extends AbstractTableModel{
+public class SalesTransactionTable extends AbstractTableModel{
     List<SalesTransactionModel> listSalesTransactions;
     
     public SalesTransactionTable(List<SalesTransactionModel> listSalesTransactions) {

@@ -10,18 +10,21 @@ import javax.swing.JTable;
 public class FormSalesTransactions extends javax.swing.JFrame {
 
     SalesTransactionsController controllerSalesTransactions;
-    
+    int hitung;
+
     public FormSalesTransactions() {
         initComponents();
         setLocationRelativeTo(null);
         ShowSalesTransactionsData();
+        IdOtomatis();
+        this.hitung = Integer.parseInt(input_salesNumber.getText());
     }
-    
+
     public void ShowSalesTransactionsData() {
         controllerSalesTransactions = new SalesTransactionsController(this);
         controllerSalesTransactions.viewListSalesTransactions();
     }
-    
+
     public void setTableSalesTransactions(JTable tableSalesTransactions) {
         this.table_sales_transaction = tableSalesTransactions;
     }
@@ -29,23 +32,23 @@ public class FormSalesTransactions extends javax.swing.JFrame {
     public JTable getTableSalesTransactions() {
         return this.table_sales_transaction;
     }
-    
+
     public String gettfSalesNumber() {
         return this.input_salesNumber.getText();
     }
-    
+
     public String gettfCustomerId() {
         return this.input_customer_id.getText();
     }
-    
+
     public String gettfCustomerFirstName() {
         return this.input_customer_firstName.getText();
     }
-    
+
     public String gettfCustomerLastName() {
         return this.input_customer_lastName.getText();
     }
-    
+
     public String getspSaleDate() {
         String SaleDate = input_saleDate.getValue().toString();
         String Year = SaleDate.substring(24);
@@ -79,7 +82,7 @@ public class FormSalesTransactions extends javax.swing.JFrame {
         String Day = SaleDate.substring(8, 10);
         return Year + "-" + Month + "-" + Day;
     }
-    
+
     public String getspShippedDate() {
         String ShippedDate = input_shippedDate.getValue().toString();
         String Year = ShippedDate.substring(24);
@@ -113,31 +116,35 @@ public class FormSalesTransactions extends javax.swing.JFrame {
         String Day = ShippedDate.substring(8, 10);
         return Year + "-" + Month + "-" + Day;
     }
-    
+
     public String gettfTransactionStatus() {
         return input_transactionStatus.getItemAt(input_transactionStatus.getSelectedIndex());
     }
-    
+
     public String gettfComments() {
         return this.input_comments.getText();
     }
-    
+
     public String gettfProductCode() {
         return this.input_productCode.getText();
     }
-    
+
+    public String gettfQuantity() {
+        return this.input_productQuantity.getText();
+    }
+
     public String gettfProductName() {
         return this.input_productName.getText();
     }
-    
+
     public String gettfProductPriceEach() {
         return this.input_productPriceEach.getText();
     }
-    
+
     public String gettfProductTotalPrice() {
         return this.input_productTotalPrice.getText();
     }
-    
+
     private void EmptyForm() {
         int Year = java.time.LocalDate.now().getYear();
         int Month = java.time.LocalDate.now().getMonthValue();
@@ -161,32 +168,41 @@ public class FormSalesTransactions extends javax.swing.JFrame {
 
     private void FillForm(int RecNum) {
         input_salesNumber.setText(table_sales_transaction.getModel().getValueAt(RecNum, 0).toString());
-        input_customer_id.setText(table_sales_transaction.getModel().getValueAt(RecNum, 1).toString());
-        input_customer_firstName.setText(table_sales_transaction.getModel().getValueAt(RecNum, 2).toString());
-        input_customer_lastName.setText(table_sales_transaction.getModel().getValueAt(RecNum, 3).toString());
-        
         //----------------------------------------------------------------------
-        String SaleDate = table_sales_transaction.getModel().getValueAt(RecNum, 4).toString();
+        String SaleDate = table_sales_transaction.getModel().getValueAt(RecNum, 1).toString();
         int Year = Integer.parseInt(SaleDate.substring(0, 4));
         int Month = Integer.parseInt(SaleDate.substring(5, 7));
         int Day = Integer.parseInt(SaleDate.substring(8, 10));
         Calendar calendar = new GregorianCalendar(Year, Month - 1, Day);
         input_saleDate.setValue(calendar.getTime());
-        //---------------------------------------------------------------------- 
-        
         //----------------------------------------------------------------------
-        String ShippedDate = table_sales_transaction.getModel().getValueAt(RecNum, 5).toString();
+        //----------------------------------------------------------------------
+        String ShippedDate = table_sales_transaction.getModel().getValueAt(RecNum, 2).toString();
         int Year2 = Integer.parseInt(ShippedDate.substring(0, 4));
         int Month2 = Integer.parseInt(ShippedDate.substring(5, 7));
         int Day2 = Integer.parseInt(ShippedDate.substring(8, 10));
-        Calendar calendar2 = new GregorianCalendar(Year, Month - 1, Day);
-        input_saleDate.setValue(calendar.getTime());
+        Calendar calendar2 = new GregorianCalendar(Year2, Month2 - 1, Day2);
+        input_shippedDate.setValue(calendar2.getTime());
         //----------------------------------------------------------------------  
-        
-        input_description.setText(table_sales_transaction.getModel().getValueAt(RecNum, 5).toString());
-        input_stock.setText(table_sales_transaction.getModel().getValueAt(RecNum, 6).toString());
-        input_buyPrice.setText(table_sales_transaction.getModel().getValueAt(RecNum, 7).toString());
-        input_salePrice.setText(table_sales_transaction.getModel().getValueAt(RecNum, 8).toString());
+        input_transactionStatus.setSelectedItem(table_sales_transaction.getModel().getValueAt(RecNum, 3).toString());
+        input_comments.setText(table_sales_transaction.getModel().getValueAt(RecNum, 4).toString());
+        input_customer_id.setText(table_sales_transaction.getModel().getValueAt(RecNum, 5).toString());
+        input_customer_firstName.setText(table_sales_transaction.getModel().getValueAt(RecNum, 6).toString());
+        input_customer_lastName.setText(table_sales_transaction.getModel().getValueAt(RecNum, 7).toString());
+        input_productCode.setText(table_sales_transaction.getModel().getValueAt(RecNum, 8).toString());
+        input_productName.setText(table_sales_transaction.getModel().getValueAt(RecNum, 9).toString());
+        input_productQuantity.setText(table_sales_transaction.getModel().getValueAt(RecNum, 10).toString());
+        input_productPriceEach.setText(table_sales_transaction.getModel().getValueAt(RecNum, 11).toString());
+        input_productTotalPrice.setText(table_sales_transaction.getModel().getValueAt(RecNum, 12).toString());
+    }
+    
+     private void IdOtomatis() {
+        input_salesNumber.requestFocus();
+        int RowCount = table_sales_transaction.getModel().getRowCount();
+        String id_terakhir = table_sales_transaction.getValueAt(RowCount - 1, 0).toString();
+        int id_otomatis = Integer.parseInt(id_terakhir) + 1;
+        input_salesNumber.setText("" + String.valueOf(id_otomatis));
+        this.hitung = Integer.parseInt(input_salesNumber.getText());
     }
 
     /**
@@ -517,16 +533,32 @@ public class FormSalesTransactions extends javax.swing.JFrame {
     private void button_insertUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_insertUpdateActionPerformed
         // TODO add your handling code here:
         input_salesNumber.requestFocus();
+        IdOtomatis();
     }//GEN-LAST:event_button_insertUpdateActionPerformed
 
     private void button_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveActionPerformed
         // TODO add your handling code here:
-
+        if (input_salesNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "ID is Empty");
+        } else {
+            controllerSalesTransactions.saveSalesTransactions();
+            EmptyForm();
+        }
+        ShowSalesTransactionsData();
+        input_salesNumber.requestFocus();
+        IdOtomatis();
     }//GEN-LAST:event_button_saveActionPerformed
 
     private void button_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_deleteActionPerformed
         // TODO add your handling code here:
-
+        if (input_salesNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Sales Number is Empty");
+        } else {
+            controllerSalesTransactions.deleteSalesTransactions();
+        }
+        ShowSalesTransactionsData();
+        EmptyForm();
+        input_salesNumber.requestFocus();
     }//GEN-LAST:event_button_deleteActionPerformed
 
     private void button_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_exitActionPerformed
@@ -536,17 +568,40 @@ public class FormSalesTransactions extends javax.swing.JFrame {
 
     private void table_sales_transactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_sales_transactionMouseClicked
         // TODO add your handling code here:
-
+         FillForm(table_sales_transaction.getSelectedRow());
     }//GEN-LAST:event_table_sales_transactionMouseClicked
 
     private void table_sales_transactionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_table_sales_transactionKeyReleased
         // TODO add your handling code here:
-
+         FillForm(table_sales_transaction.getSelectedRow());
     }//GEN-LAST:event_table_sales_transactionKeyReleased
 
     private void input_salesNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_salesNumberKeyReleased
         // TODO add your handling code here:
-
+        this.hitung = Integer.parseInt(input_salesNumber.getText());
+        if (evt.getKeyCode() == evt.VK_UP) {
+            hitung++;
+            input_salesNumber.setText("" + hitung);
+        } else if (evt.getKeyCode() == evt.VK_DOWN) {
+            if (hitung > 1) {
+                hitung--;
+                input_salesNumber.setText("" + hitung);
+            } else {
+                hitung = 1;
+                input_salesNumber.setText("" + hitung);
+            }
+        }
+        
+        int RowCount = table_sales_transaction.getModel().getRowCount();
+        for (int RecNum = 0; RecNum < RowCount; RecNum++) {
+            if (input_salesNumber.getText().equals(table_sales_transaction.getValueAt(RecNum, 0).toString())) {
+                //JOptionPane.showMessageDialog(null, "Id Ketemu");
+                FillForm(RecNum);
+                break;
+            } else {
+                EmptyForm();
+            }
+        }
     }//GEN-LAST:event_input_salesNumberKeyReleased
 
     /**
