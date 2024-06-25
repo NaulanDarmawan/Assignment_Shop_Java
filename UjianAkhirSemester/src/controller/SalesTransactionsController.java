@@ -36,8 +36,8 @@ public class SalesTransactionsController {
             formSalesTransactions.gettfCustomerLastName(),
             formSalesTransactions.gettfProductCode(),
             formSalesTransactions.gettfProductName(),
-            Integer.parseInt(formSalesTransactions.gettfQuantity()),
-            Float.parseFloat(formSalesTransactions.gettfProductPriceEach()),
+            formSalesTransactions.gettfQuantity(),
+            formSalesTransactions.gettfProductPriceEach(),
             Float.parseFloat(formSalesTransactions.gettfProductTotalPrice())
         );
         if (daoSalesTransactions.findSalesTransactions(modelSalesTransactions.getSalesNumber()) == true){
