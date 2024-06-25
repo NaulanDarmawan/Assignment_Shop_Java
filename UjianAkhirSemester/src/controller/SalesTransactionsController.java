@@ -1,8 +1,16 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+/**********************
+ * @author myoenoes
+ **********************/
+
 package controller;
 
-import model.SalesTransactionDataAccessObject;
-import model.SalesTransactionModel;
-import model.SalesTransactionTable;
+import model.SalesTransactionsDataAccessObject;
+import model.SalesTransactionsModel;
+import model.SalesTransactionsTable;
 import view.FormSalesTransactions;
 //------------------------------------------------------------------------------
 import java.util.List;
@@ -10,48 +18,25 @@ import javax.swing.JOptionPane;
 
 public class SalesTransactionsController {
     FormSalesTransactions formSalesTransactions;                            
-    List<SalesTransactionModel> listSalesTransactions;                     
-    SalesTransactionDataAccessObject daoSalesTransactions = new SalesTransactionDataAccessObject();         
-    SalesTransactionModel modelSalesTransactions = new SalesTransactionModel(); 
+    List<SalesTransactionsModel> listSalesTransactions;                     
+    SalesTransactionsDataAccessObject daoSalesTransactions = new SalesTransactionsDataAccessObject();         
+    SalesTransactionsModel modelSalesTransactions = new SalesTransactionsModel();   
     
     public SalesTransactionsController(FormSalesTransactions formSalesTransactions) {
         this.formSalesTransactions = formSalesTransactions;                 
-        listSalesTransactions = daoSalesTransactions.listSalesTransactions();       
+        listSalesTransactions = daoSalesTransactions.listSalesTransactions("");       
     }
-    
-    public void viewListSalesTransactions(){
-        SalesTransactionTable modeltableSalesTransactions = new SalesTransactionTable(listSalesTransactions);
+
+    public void viewListSalesTransactions(String SalesNumber){
+        SalesTransactionsTable modeltableSalesTransactions = new SalesTransactionsTable(listSalesTransactions);
         formSalesTransactions.getTableSalesTransactions().setModel(modeltableSalesTransactions);
     }
     
-    public void saveSalesTransactions(){
-        modelSalesTransactions.setSalesTransactions(
-            Integer.parseInt(formSalesTransactions.gettfSalesNumber()),
-            formSalesTransactions.getspSaleDate(),
-            formSalesTransactions.getspShippedDate(),
-            formSalesTransactions.gettfTransactionStatus(), 
-            formSalesTransactions.gettfComments(), 
-            formSalesTransactions.gettfCustomerId(),
-            formSalesTransactions.gettfCustomerFirstName(), 
-            formSalesTransactions.gettfCustomerLastName(),
-            formSalesTransactions.gettfProductCode(),
-            formSalesTransactions.gettfProductName(),
-            formSalesTransactions.gettfQuantity(),
-            formSalesTransactions.gettfProductPriceEach(),
-            Float.parseFloat(formSalesTransactions.gettfProductTotalPrice())
-        );
-        if (daoSalesTransactions.findSalesTransactions(modelSalesTransactions.getSalesNumber()) == true){
-            //if id customers exists then update data
-            daoSalesTransactions.updateSalesTransactions(modelSalesTransactions);
-            JOptionPane.showMessageDialog(formSalesTransactions, "Updating data was successful");
-        } else {
-            daoSalesTransactions.addSalesTransactions(modelSalesTransactions);
-            JOptionPane.showMessageDialog(formSalesTransactions, "Adding data was successful");
-        }
-    }
-    
     public void deleteSalesTransactions(){
-        daoSalesTransactions.deleteSalesTransactions(formSalesTransactions.gettfSalesNumber());
-        JOptionPane.showMessageDialog(formSalesTransactions, "Deleting data was successful");
-    }
+        daoSalesTransactions.deleteSalesTransactions(
+                String.valueOf(formSalesTransactions.gettfSalesNumber()),
+                formSalesTransactions.gettfProductCode()
+        );
+        JOptionPane.showMessageDialog(null, "Deleting data was successful");
+    }   
 }
