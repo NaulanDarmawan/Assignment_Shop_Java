@@ -10,7 +10,7 @@ package model;
 
 import controller.DbConnection;
 import model.SalesTransactionsModel;
-import view.FormSalesTransactions;
+//import view.FormSalesTransactions;
 //------------------------------------------------------------------------------
 import java.sql.Connection;
 import java.sql.PreparedStatement;
