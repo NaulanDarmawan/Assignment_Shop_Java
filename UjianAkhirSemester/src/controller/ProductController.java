@@ -3,51 +3,51 @@ package controller;
 import model.ProductDataAccessObject;
 import model.ProductModel;
 import model.ProductTable;
-import view.FormProducts;
+import view.InternalFormProducts;
 //------------------------------------------------------------------------------
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ProductController {
-    FormProducts formProducts;                            
+    InternalFormProducts InternalFormProducts;                            
     List<ProductModel> listProducts;                     
     ProductDataAccessObject daoProducts = new ProductDataAccessObject();         
     ProductModel modelProducts = new ProductModel();
     
-    public ProductController(FormProducts formProducts) {
-        this.formProducts = formProducts;                 
+    public ProductController(InternalFormProducts InternalFormProducts) {
+        this.InternalFormProducts = InternalFormProducts;                 
         listProducts = daoProducts.listProducts();       
     }
     
     public void viewListProducts(){
         ProductTable modeltableProducts = new ProductTable(listProducts);
-        formProducts.getTableSuppliers().setModel(modeltableProducts);
+        InternalFormProducts.getTableSuppliers().setModel(modeltableProducts);
     }
     
     public void saveProducts(){
         modelProducts.setProducts(
-            formProducts.gettfProductCode(), 
-            formProducts.gettfProductName(),
-            formProducts.gettfProductLine(),
-            formProducts.gettfProductScale(), 
-            formProducts.gettfProductVendor(), 
-            formProducts.gettfProductDescription(),
-            Integer.parseInt(formProducts.gettfQuantityInStock()),
-            Float.parseFloat(formProducts.gettfBuyPrice()),
-            Float.parseFloat(formProducts.gettfSalePrice())
+            InternalFormProducts.gettfProductCode(), 
+            InternalFormProducts.gettfProductName(),
+            InternalFormProducts.gettfProductLine(),
+            InternalFormProducts.gettfProductScale(), 
+            InternalFormProducts.gettfProductVendor(), 
+            InternalFormProducts.gettfProductDescription(),
+            Integer.parseInt(InternalFormProducts.gettfQuantityInStock()),
+            Float.parseFloat(InternalFormProducts.gettfBuyPrice()),
+            Float.parseFloat(InternalFormProducts.gettfSalePrice())
         );
         if (daoProducts.findProducts(modelProducts.getProductCode()) == true){
             //if id customers exists then update data
             daoProducts.updateProducts(modelProducts);
-            JOptionPane.showMessageDialog(formProducts, "Updating data was successful");
+            JOptionPane.showMessageDialog(InternalFormProducts, "Updating data was successful");
         } else {
             daoProducts.addProducts(modelProducts);
-            JOptionPane.showMessageDialog(formProducts, "Adding data was successful");
+            JOptionPane.showMessageDialog(InternalFormProducts, "Adding data was successful");
         }
     }
     
     public void deleteProducts(){
-        daoProducts.deleteProducts(formProducts.gettfProductCode());
-        JOptionPane.showMessageDialog(formProducts, "Deleting data was successful");
+        daoProducts.deleteProducts(InternalFormProducts.gettfProductCode());
+        JOptionPane.showMessageDialog(InternalFormProducts, "Deleting data was successful");
     }
 }

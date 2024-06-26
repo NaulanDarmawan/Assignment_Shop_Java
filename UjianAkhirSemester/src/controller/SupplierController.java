@@ -3,50 +3,50 @@ package controller;
 import model.SupplierDataAccessObject;
 import model.SupplierModel;
 import model.SupplierTable;
-import view.FormSuppliers;
+import view.InternalFormSupplier;
 //------------------------------------------------------------------------------
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class SupplierController {
-    FormSuppliers formSuppliers;                            
+    InternalFormSupplier InternalFormSupplier;                            
     List<SupplierModel> listSuppliers;                     
     SupplierDataAccessObject daoSuppliers = new SupplierDataAccessObject();         
     SupplierModel modelSuppliers = new SupplierModel(); 
     
-    public SupplierController(FormSuppliers formSuppliers) {
-        this.formSuppliers = formSuppliers;                 
+    public SupplierController(InternalFormSupplier InternalFormSupplier) {
+        this.InternalFormSupplier = InternalFormSupplier;                 
         listSuppliers = daoSuppliers.listSuppliers();       
     }
     
     public void viewListSuppliers(){
         SupplierTable modeltableSuppliers = new SupplierTable(listSuppliers);
-        formSuppliers.getTableSuppliers().setModel(modeltableSuppliers);
+        InternalFormSupplier.getTableSuppliers().setModel(modeltableSuppliers);
     }
     
     public void saveSuppliers(){
         modelSuppliers.setSuppliers(
-            formSuppliers.gettfId(), 
-            formSuppliers.gettfFirstName(),
-            formSuppliers.gettfLastName(),
-            formSuppliers.gettfPhone(), 
-            formSuppliers.gettfAddress(), 
-            formSuppliers.gettfPostalCode(),
-            formSuppliers.gettfCity(), 
-            formSuppliers.gettfCountry()
+            InternalFormSupplier.gettfId(), 
+            InternalFormSupplier.gettfFirstName(),
+            InternalFormSupplier.gettfLastName(),
+            InternalFormSupplier.gettfPhone(), 
+            InternalFormSupplier.gettfAddress(), 
+            InternalFormSupplier.gettfPostalCode(),
+            InternalFormSupplier.gettfCity(), 
+            InternalFormSupplier.gettfCountry()
         );
         if (daoSuppliers.findSuppliers(modelSuppliers.getId()) == true){
             //if id customers exists then update data
             daoSuppliers.updateSuppliers(modelSuppliers);
-            JOptionPane.showMessageDialog(formSuppliers, "Updating data was successful");
+            JOptionPane.showMessageDialog(InternalFormSupplier, "Updating data was successful");
         } else {
             daoSuppliers.addSuppliers(modelSuppliers);
-            JOptionPane.showMessageDialog(formSuppliers, "Adding data was successful");
+            JOptionPane.showMessageDialog(InternalFormSupplier, "Adding data was successful");
         }
     }
     
     public void deleteSuppliers(){
-        daoSuppliers.deleteSuppliers(Integer.toString(formSuppliers.gettfId()));
-        JOptionPane.showMessageDialog(formSuppliers, "Deleting data was successful");
+        daoSuppliers.deleteSuppliers(Integer.toString(InternalFormSupplier.gettfId()));
+        JOptionPane.showMessageDialog(InternalFormSupplier, "Deleting data was successful");
     }
 }

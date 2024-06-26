@@ -64,7 +64,7 @@ public class DAOPurchaseTransactions {
     "UPDATE products " +
     "SET QuantityInStock = QuantityInStock + ?, " +
     "    BuyPrice = ?, " +
-    "    SalePrice = (? * 1.10) " +
+    "    SalePrice = (? * 0.1) " +
     "WHERE ProductCode = ?;";
 
         //Constructor class --> create a connection to the database server
@@ -213,12 +213,8 @@ public class DAOPurchaseTransactions {
                 "UPDATE products " +
                 "SET QuantityInStock = QuantityInStock + ?, " +
                 "    BuyPrice = ?, " +
-                "    SalePrice = BuyPrice * 1.10 " +
+                "    SalePrice = (BuyPrice * 0.1) + BuyPrice " +
                 "WHERE ProductCode = ?;";
-        
-        JOptionPane.showMessageDialog(null, "sql : " + update_products);
-        JOptionPane.showMessageDialog(null, "sql : " + modelPurchaseTransactions.getQuantity());
-        JOptionPane.showMessageDialog(null, "sql : " + modelPurchaseTransactions.getProductCode());
 
         statement = connection.prepareStatement(update_products);
         statement.setString(1, modelPurchaseTransactions.getQuantity());

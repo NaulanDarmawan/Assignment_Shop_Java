@@ -11,18 +11,18 @@ package controller;
 import model.DAOPurchaseTransactions;
 import model.ModelPurchaseTransactions;
 import model.ModelTablePurchaseTransactions;
-import view.FormPurchaseTransactions1;
+import view.InternalFormPurchaseTransactions;
 //------------------------------------------------------------------------------
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ControllerPurchaseTransactions {
-    FormPurchaseTransactions1 formPurchaseTransactions;                            
+    InternalFormPurchaseTransactions formPurchaseTransactions;                            
     List<ModelPurchaseTransactions> listPurchaseTransactions;                     
     DAOPurchaseTransactions daoPurchaseTransactions = new DAOPurchaseTransactions();         
     ModelPurchaseTransactions modelPurchaseTransactions = new ModelPurchaseTransactions();   
     
-    public ControllerPurchaseTransactions(FormPurchaseTransactions1 formPurchaseTransactions) {
+    public ControllerPurchaseTransactions(InternalFormPurchaseTransactions formPurchaseTransactions) {
         this.formPurchaseTransactions = formPurchaseTransactions;                 
         listPurchaseTransactions = daoPurchaseTransactions.listPurchaseTransactions("");       
     }

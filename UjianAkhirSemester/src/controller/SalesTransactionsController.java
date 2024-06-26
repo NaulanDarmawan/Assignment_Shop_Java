@@ -11,18 +11,18 @@ package controller;
 import model.SalesTransactionsDataAccessObject;
 import model.SalesTransactionsModel;
 import model.SalesTransactionsTable;
-import view.FormSalesTransactions;
+import view.InternalFormSalesTransactions;
 //------------------------------------------------------------------------------
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class SalesTransactionsController {
-    FormSalesTransactions formSalesTransactions;                            
+    InternalFormSalesTransactions formSalesTransactions;                            
     List<SalesTransactionsModel> listSalesTransactions;                     
     SalesTransactionsDataAccessObject daoSalesTransactions = new SalesTransactionsDataAccessObject();         
     SalesTransactionsModel modelSalesTransactions = new SalesTransactionsModel();   
     
-    public SalesTransactionsController(FormSalesTransactions formSalesTransactions) {
+    public SalesTransactionsController(InternalFormSalesTransactions formSalesTransactions) {
         this.formSalesTransactions = formSalesTransactions;                 
         listSalesTransactions = daoSalesTransactions.listSalesTransactions("");       
     }
